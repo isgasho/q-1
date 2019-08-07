@@ -40,7 +40,7 @@ impl Server  {
             return;
         } else {
             self.customer_being_served = customer;
-            self.clock = self.clock + Clock::from(1);
+            self.clock = self.clock + Clock::from(2);
             let event = Event::new(EventType::ServerEvent, self.get_clock());
             ctx.get_events().insert(event);
         }
@@ -51,7 +51,7 @@ impl AbstractEvent for Server {
     fn execute( &mut self, ctx: &mut Context ){
         let c = self.customer_being_served.take();
         self.total_customers_servered += 1;
-        println!("{:?} serving  {:?} \ttotal served {:?}", self.get_clock(), c, self.total_customers_servered);
+        println!("{:?} serving  {:?} \ttotal rx {:?}", self.get_clock(), c.unwrap(), self.total_customers_servered);
         let q = ctx.get_queue();
         if let  Some(c) = q.remove() {
             self.insert(ctx, Some(c) );

@@ -26,7 +26,7 @@ impl Queue  {
         if server.is_available() {
             server.insert( ctx, Some(customer));
         } else if self.customers.len() >= self.capacity  {
-            // reject, do nothing
+            println!("{:?} dropped  {:?} ", sim.get_clock(), customer);
         } else {
             self.customers.push(customer);
         }

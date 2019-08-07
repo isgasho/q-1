@@ -21,7 +21,9 @@ impl AbstractEvent for Generator {
     fn execute(&mut self, ctx: &mut Context) {
         let customer = Customer::new(self.count);
         let mut queue = ctx.get_queue();
+        println!("{:?} sending  {:?} \ttotal tx {:?}", self.get_clock(), customer, self.count);
         queue.insert(ctx, customer);
+
         self.count += 1;
         self.clock = Clock::from(1) + self.clock;
         if self.get_clock() < self.max_sim_time {

@@ -7,15 +7,15 @@ use qframework::simulator::*;
 use core::marker::PhantomData;
 
 pub fn main()  {
-    let max_sim_time = Clock::from(1000);
+    let max_sim_time = Clock::from(50);
     let capacity = 10;
-    let mut simulator = &mut Simulator::new();
-    let mut queue = &mut Queue::new();
+    let  simulator = &mut Simulator::new();
+    let  queue = &mut Queue::new();
 
-    let mut worker  = &mut Server::new();
+    let  worker  = &mut Server::new();
     // the generator can be any thing have "execute()"
-    let mut source  = &mut Generator::new ( max_sim_time);
-    let mut events = &mut EventQueue::new();
+    let  source  = &mut Generator::new ( max_sim_time);
+    let  events = &mut EventQueue::new();
     let mut ctx = Context {simulator, servers: worker, generator: source, events,queue, _marker: PhantomData };
     ctx.get_queue().capacity = capacity;
 
