@@ -1,9 +1,9 @@
-use q::base::*;
-use q::event::*;
-use q::generator::*;
-use q::server::*;
-use q::queue::*;
-use q::simulator::*;
+use qframework::base::*;
+use qframework::event::*;
+use qframework::generator::*;
+use qframework::server::*;
+use qframework::queue::*;
+use qframework::simulator::*;
 use core::marker::PhantomData;
 
 pub fn main()  {
