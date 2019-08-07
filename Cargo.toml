@@ -5,6 +5,9 @@ license = "MIT/Apache-2.0"
 authors = ["Xiangrong Ma <xiangrong.ma@gmail.com>"]
 documentation = "https://max6cn.github.io/q/"
 homepage = "https://github.com/max6cn/q"
+description = """
+A experimental micor framework for clear design, based on queue model
+"""
 repository = "https://github.com/max6cn/q"
 exclude = ["/utils/*", "/.travis.yml", "/appveyor.yml", ".gitignore"]
 autobenches = true
