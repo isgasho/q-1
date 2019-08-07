@@ -1,9 +1,21 @@
 [package]
 name = "q"
 version = "0.1.0"
+license = "MIT/Apache-2.0"
 authors = ["Xiangrong Ma <xiangrong.ma@gmail.com>"]
+documentation = "https://max6cn.github.io/q/"
+homepage = "https://github.com/max6cn/q"
+repository = "https://github.com/max6cn/q"
+exclude = ["/utils/*", "/.travis.yml", "/appveyor.yml", ".gitignore"]
+autobenches = true
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
+readme = "README.md"
+keywords = ["queue", "framework", "network", "web","algorithms"]
+categories = ["Concurrency", "Rust patterns", "Simulation","WebAssembly","algorithms"]
+maintenance = { status = "experimental" }
+[badges]
+travis-ci = { repository = "rust-random/rand" }
+appveyor = { repository = "rust-random/rand" }
 [dependencies]
+[package.metadata.docs.rs]
+all-features = true
