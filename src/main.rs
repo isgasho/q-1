@@ -2,6 +2,8 @@ use std::marker::PhantomData;
 use std::cmp::Ordering;
 use std::collections::BinaryHeap;
 use std::env;
+use std::fmt::{Debug, Formatter};
+
 ///! In this example ,we transform the following function into non-recursive form,
 ///! evaluate and get result.
 ///!
@@ -151,7 +153,6 @@ impl AbstractEvent for Adder {
 /// # queue
 /// remember this is not event queue, it's a communication channel to model data dependency
 /// it's purpose here is to register Adder event data is available.
-#[derive(Debug)]
 pub struct Queue{
     fibs: Vec<i32>,
     pub capacity: usize,
@@ -164,7 +165,7 @@ impl Queue  {
         self.fibs.len()
     }
     pub fn insert( &mut self, ctx: &mut Context, fib: i32) {
-        let mut sim = ctx.get_simulator();
+        let sim = ctx.get_simulator();
         if self.size() >= 2 {
             // let mut  adder = ctx.get_adder();
             // adder.execute(ctx);
@@ -182,15 +183,20 @@ impl Queue  {
     }
 
 }
+impl Debug for Queue {
+    fn fmt(&self, f: &mut Formatter) -> Result<(), std::fmt::Error> {
+        write!(f, "{:?}", self.fibs)
+    }
+}
 /// # main
 /// Our boilplate code to create operators and setup framework, this should be simplifed with a
 /// builder pattern
-///
+/// usage: ./main n
 pub fn main()  {
     let args: Vec<String> = env::args().collect();
-    let n :i32 = args[1].parse().unwrap();
-    let max_sim_time = Clock::from(500000);
-    let capacity = 1000;
+    let n :i32 = args[1].parse().unwrap_or(5);
+
+    let  capacity = 1000;
     let  simulator = &mut Simulator::new();
     let  queue = &mut Queue::new();
     let  adder  = &mut Adder::new();
@@ -201,12 +207,10 @@ pub fn main()  {
     ctx.get_queue().capacity = capacity;
     let initial_event= Event::new(EventType::FibEvent(n),Clock::from(0));
     ctx.get_events().insert(initial_event);
+    let _ =  Simulator::run(&mut ctx);
 
-    let stats =  run(&mut ctx);
-    // todo: real drop
-    drop(ctx);
 
-    println!("Send {}, processed {}, tick {} ", stats.0, stats.1, stats.2 );
+//    println!("Send {}, processed {}, tick {} ", stats.0, stats.1, stats.2 );
 }
 
 /// # Q Framework Functions
@@ -296,8 +300,8 @@ pub struct Event {
     etype: EventType
 }
 
-//
-// Explicitly implement the trait so the queue becomes a min-heap instead of a max-heap.
+///
+/// Explicitly implement the trait so the queue becomes a min-heap instead of a max-heap.
 impl Ord for Event {
     fn cmp(&self, other: &Self) -> Ordering {
         other.clock.cmp(&self.clock)
@@ -329,11 +333,11 @@ impl AbstractEvent for Event {
         // info!("Running Event");
         match self.etype {
             EventType::AdderEvent => {
-                let mut adder = ctx.get_adder();
+                let  adder = ctx.get_adder();
                 adder.execute(ctx);
             },
             EventType::FibEvent(x) =>{
-                let mut fib = ctx.get_fib();
+                let  fib = ctx.get_fib();
                 fib.set_input(x);
                 fib.execute(ctx);
             }
@@ -398,7 +402,6 @@ pub struct Context<'a , T = i32>{
 }
 impl  <'a, T> Context<'a, T>{
     pub fn get_simulator(&self) -> &'a mut Simulator {
-        // Use a reborrow instead
         let ptr =  unsafe { &mut *self.simulator };
         ptr
 
@@ -427,7 +430,7 @@ impl  <'a, T> Context<'a, T>{
 
 pub trait AbstractSimulator {
     fn insert(&mut self, ctx: &mut Context, e: Event);
-    fn cancel(&mut self, e: Event) {
+    fn cancel(&mut self, _e: Event) {
         unimplemented!()
     }
 }
@@ -438,16 +441,9 @@ pub trait AbstractSimulator {
 /// System Tick
 /// Please refer to Fib/Adder/Simulator to see how we synchronize clock and advance to next tick.
 ///
+///
 #[derive(PartialEq, Ord,Eq, PartialOrd, Clone, Copy)]
 pub struct Clock(i64);
-
-impl From<i64> for Clock {
-    fn from(t: i64) -> Self {
-        Clock(t as i64)
-    }
-}
-
-
 impl Clock {
     pub fn set_raw(&mut self, v: i64) {
         self.0 = v;
@@ -456,7 +452,11 @@ impl Clock {
         self.0
     }
 }
-
+impl From<i64> for Clock {
+    fn from(t: i64) -> Self {
+        Clock(t as i64)
+    }
+}
 impl std::ops::Add for Clock {
     type Output = Self;
     fn add(self, other: Self) -> Self {
@@ -478,15 +478,3 @@ pub trait Clocked{
     fn get_clock(&self) -> Clock ;
     fn set_clock(&mut self, t: Clock);
 }
-// impl std::ops::Add for Clock {
-//     type Output = Self;
-//     fn add(self, other: Self) -> Self {
-//         Self::from(self.0 + other.0)
-//     }
-// }
-
-// impl std::fmt::Debug for Clock {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "@{:010.03}", self.0)
-//     }
-// }

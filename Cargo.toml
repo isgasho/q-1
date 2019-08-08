@@ -15,7 +15,6 @@ edition = "2018"
 readme = "README.md"
 keywords = ["queue", "framework", "network", "web","algorithms"]
 categories = ["algorithms"]
-maintenance = { status = "experimental" }
 [badges]
 travis-ci = { repository = "rust-random/rand" }
 appveyor = { repository = "rust-random/rand" }
