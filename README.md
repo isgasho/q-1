@@ -63,7 +63,7 @@ For now this project is just at basic shape, ideas welcome.
 
 - define API
 - add more examples
-- add 0 external dependency
+- implement Lisp
 
 # License
 
