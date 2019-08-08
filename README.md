@@ -81,6 +81,53 @@ Fib(n) = Add ( Fib(n -1 ) , Fib (n-2), Fib(0) = 0, Fib(1) = 1.
 9: eventually we have last two numbers on Add's queue, and we added them up, write to Add's queue again.
 10: no more event in system, and we got result from Add's queue.
 
+```
+./fib 5
+@0000000000 queue = Queue { fibs: [], capacity: 1000 }
+@0000000001 queue = Queue { fibs: [], capacity: 1000 }
+@0000000002 queue = Queue { fibs: [], capacity: 1000 }
+@0000000003 queue = Queue { fibs: [], capacity: 1000 }
+@0000000004 queue = Queue { fibs: [], capacity: 1000 }
+@0000000005 queue = Queue { fibs: [1], capacity: 1000 }
+@0000000006 queue = Queue { fibs: [1], capacity: 1000 }
+@0000000007 queue = Queue { fibs: [1, 1], capacity: 1000 }
+@0000000008 queue = Queue { fibs: [1, 1], capacity: 1000 }
+@0000000009 queue = Queue { fibs: [1, 1], capacity: 1000 }
+@0000000010 queue = Queue { fibs: [1, 1], capacity: 1000 }
+@0000000011 queue = Queue { fibs: [1, 1], capacity: 1000 }
+@0000000011 queue = Queue { fibs: [1, 1], capacity: 1000 }
+@0000000012 queue = Queue { fibs: [2], capacity: 1000 }
+@0000000013 queue = Queue { fibs: [2, 1], capacity: 1000 }
+@0000000014 queue = Queue { fibs: [2, 1], capacity: 1000 }
+@0000000014 queue = Queue { fibs: [2, 1], capacity: 1000 }
+@0000000015 queue = Queue { fibs: [3], capacity: 1000 }
+@0000000015 queue = Queue { fibs: [3], capacity: 1000 }
+@0000000016 queue = Queue { fibs: [3, 0], capacity: 1000 }
+@0000000017 queue = Queue { fibs: [3, 0], capacity: 1000 }
+@0000000017 queue = Queue { fibs: [3, 0], capacity: 1000 }
+@0000000018 queue = Queue { fibs: [3], capacity: 1000 }
+@0000000018 queue = Queue { fibs: [3, 0], capacity: 1000 }
+@0000000019 queue = Queue { fibs: [3], capacity: 1000 }
+@0000000020 queue = Queue { fibs: [3, 1], capacity: 1000 }
+@0000000021 queue = Queue { fibs: [3, 1], capacity: 1000 }
+@0000000022 queue = Queue { fibs: [3, 1], capacity: 1000 }
+@0000000022 queue = Queue { fibs: [3, 1], capacity: 1000 }
+@0000000023 queue = Queue { fibs: [4], capacity: 1000 }
+@0000000023 queue = Queue { fibs: [4, 1], capacity: 1000 }
+@0000000024 queue = Queue { fibs: [5], capacity: 1000 }
+@0000000025 queue = Queue { fibs: [5, 0], capacity: 1000 }
+@0000000026 queue = Queue { fibs: [5, 0], capacity: 1000 }
+@0000000026 queue = Queue { fibs: [5, 0], capacity: 1000 }
+@0000000027 queue = Queue { fibs: [5], capacity: 1000 }
+@0000000027 queue = Queue { fibs: [5, 0], capacity: 1000 }
+@0000000028 queue = Queue { fibs: [5], capacity: 1000 }
+@0000000029 queue = Queue { fibs: [5, 0], capacity: 1000 }
+@0000000030 queue = Queue { fibs: [5, 0], capacity: 1000 }
+@0000000030 queue = Queue { fibs: [5, 0], capacity: 1000 }
+@0000000031 queue = Queue { fibs: [5], capacity: 1000 }
+@0000000031 Finished All Events
+Result 5
+```
 You can do this process on paper by hand, and you will find out we dont need maintain a deep call stack, and it's indeed lazy!
 
 Where is the Code? `wip`.
