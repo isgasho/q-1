@@ -1,6 +1,6 @@
 [package]
 name = "qframework"
-version = "0.1.0"
+version = "0.1.2"
 license = "MIT/Apache-2.0"
 authors = ["Xiangrong Ma <xiangrong.ma@gmail.com>"]
 documentation = "https://max6cn.github.io/q/"
@@ -14,7 +14,7 @@ autobenches = true
 edition = "2018"
 readme = "README.md"
 keywords = ["queue", "framework", "network", "web","algorithms"]
-categories = ["Concurrency", "Rust patterns", "Simulation","WebAssembly","algorithms"]
+categories = ["algorithms"]
 maintenance = { status = "experimental" }
 [badges]
 travis-ci = { repository = "rust-random/rand" }
